@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PhoneDirectory {
-    private final Map<String, String> phoneDirectory = new HashMap<>();
+    private Map<String, String> phoneDirectory = new HashMap<>();
 
     /**
      * Adds a new entry to the phone directory.
@@ -72,11 +72,11 @@ public class PhoneDirectory {
         phoneDirectory.put(phone, name);
     }
 
-    public void backup() {
+    public void backup(String filePath) {
         // implementation
     }
 
-    public void restore() {
+    public void restore(String filePath) {
         // implementation
     }
 

@@ -46,6 +46,8 @@ public class LogParserTests {
     @Test
     public void testLogReadAndWright() {
         File file = new File("build/test.log");
+        file.deleteOnExit();
+
         LogParser parser = new LogParser(LOG);
         parser.writeLog(file);
         LogParser parser2 = new LogParser(file);

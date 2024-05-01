@@ -32,9 +32,7 @@ public class LogParser {
         }
 
         LogEntry[] result = new LogEntry[count];
-        for (int i = 0; i < count; i++) {
-            result[i] = filtered[i];
-        }
+        System.arraycopy(filtered, 0, result, 0, count);
 
         return result;
     }
