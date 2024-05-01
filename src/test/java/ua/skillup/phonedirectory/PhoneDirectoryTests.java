@@ -108,4 +108,15 @@ public class PhoneDirectoryTests {
         Matcher matcher = pattern.matcher(phoneDirectory.toString());
         assertTrue(matcher.find());
     }
+
+    @Test
+    public void testBackupAndRestore() {
+        phoneDirectory.addEntry("John Doe", "1234567890");
+        phoneDirectory.backup();
+
+        PhoneDirectory anotherPhoneDirectory = new PhoneDirectory();
+        anotherPhoneDirectory.restore();
+
+        assertEquals(phoneDirectory, anotherPhoneDirectory);
+    }
 }

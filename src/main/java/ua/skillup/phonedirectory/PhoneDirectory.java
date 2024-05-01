@@ -72,6 +72,14 @@ public class PhoneDirectory {
         phoneDirectory.put(phone, name);
     }
 
+    public void backup() {
+        // implementation
+    }
+
+    public void restore() {
+        // implementation
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("=== Phone Directory ===\n\n");
