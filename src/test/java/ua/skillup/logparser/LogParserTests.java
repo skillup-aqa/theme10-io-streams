@@ -2,6 +2,7 @@ package ua.skillup.logparser;
 
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
@@ -26,19 +27,28 @@ public class LogParserTests {
 
     @Test
     public void testGetErrorLogs() {
-        LogParser parser = LogParser.fromLog(LOG);
+        LogParser parser = new LogParser(LOG);
         assertEquals(parser.filterByLevel(LogLevel.ERROR), new LogEntry[]{LOG_ENTRIES[0], LOG_ENTRIES[3]});
     }
 
     @Test
     public void testGetInfoLogs() {
-        LogParser parser = LogParser.fromLog(LOG);
+        LogParser parser = new LogParser(LOG);
         assertEquals(parser.filterByLevel(LogLevel.INFO), new LogEntry[]{LOG_ENTRIES[1]});
     }
 
     @Test
     public void testGetTraceLogs() {
-        LogParser parser = LogParser.fromLog(LOG);
+        LogParser parser = new LogParser(LOG);
         assertEquals(parser.filterByLevel(LogLevel.TRACE), new LogEntry[0]);
+    }
+
+    @Test
+    public void testLogReadAndWright() {
+        File file = new File("build/test.log");
+        LogParser parser = new LogParser(LOG);
+        parser.writeLog(file);
+        LogParser parser2 = new LogParser(file);
+        assertEquals(parser.getLogEntries(), parser2.getLogEntries());
     }
 }
