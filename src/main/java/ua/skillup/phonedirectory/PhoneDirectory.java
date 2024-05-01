@@ -1,12 +1,13 @@
 package ua.skillup.phonedirectory;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PhoneDirectory {
-    private final Map<String, String> phoneDirectory = new HashMap<>();
+    private Map<String, String> phoneDirectory = new HashMap<>();
 
     /**
      * Adds a new entry to the phone directory.
@@ -72,12 +73,22 @@ public class PhoneDirectory {
         phoneDirectory.put(phone, name);
     }
 
-    public void backup() {
-        // implementation
+    public void backup(String filePath) {
+        try (FileOutputStream fos = new FileOutputStream(filePath);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(phoneDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void restore() {
-        // implementation
+    public void restore(String filePath) {
+        try (FileInputStream fos = new FileInputStream(filePath);
+             ObjectInputStream oos = new ObjectInputStream(fos)) {
+            this.phoneDirectory = (Map<String, String>) oos.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

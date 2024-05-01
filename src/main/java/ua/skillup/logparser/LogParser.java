@@ -1,6 +1,6 @@
 package ua.skillup.logparser;
 
-import java.io.File;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
@@ -32,9 +32,7 @@ public class LogParser {
         }
 
         LogEntry[] result = new LogEntry[count];
-        for (int i = 0; i < count; i++) {
-            result[i] = filtered[i];
-        }
+        System.arraycopy(filtered, 0, result, 0, count);
 
         return result;
     }
@@ -44,12 +42,26 @@ public class LogParser {
     }
 
     public static void writeLog(File file, LogEntry[] logEntries) {
-        // write log to file
+        try(FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(fileWriter)
+        ) {
+            for (LogEntry logEntry : logEntries) {
+                writer.write(logEntry.toString());
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String[] readLogFile(File file) {
-        // read file content
-        return new String[0];
+        try (FileReader fileReader = new FileReader(file);
+             BufferedReader reader = new BufferedReader(fileReader)
+        ) {
+            return reader.lines().toList().toArray(new String[0]);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private LogEntry[] fromLog(String[] lines) {

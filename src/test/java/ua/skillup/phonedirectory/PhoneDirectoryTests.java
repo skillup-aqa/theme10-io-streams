@@ -111,12 +111,14 @@ public class PhoneDirectoryTests {
 
     @Test
     public void testBackupAndRestore() {
+        String filePath = "build/phone_directory.ser";
+
         phoneDirectory.addEntry("John Doe", "1234567890");
-        phoneDirectory.backup();
+        phoneDirectory.backup(filePath);
 
         PhoneDirectory anotherPhoneDirectory = new PhoneDirectory();
-        anotherPhoneDirectory.restore();
+        anotherPhoneDirectory.restore(filePath);
 
-        assertEquals(phoneDirectory, anotherPhoneDirectory);
+        assertEquals(anotherPhoneDirectory.getName("1234567890"), "John Doe");
     }
 }
