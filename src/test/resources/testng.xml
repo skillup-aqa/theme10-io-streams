@@ -3,7 +3,7 @@
 <suite name="Run all tests">
     <test name="All tests">
         <packages>
-            <package name="ua.skillup"/>
+            <package name="ua.skillup.*"/>
         </packages>
     </test>
 </suite>
