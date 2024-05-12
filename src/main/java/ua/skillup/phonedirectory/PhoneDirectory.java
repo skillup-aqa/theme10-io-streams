@@ -1,8 +1,10 @@
 package ua.skillup.phonedirectory;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PhoneDirectory {
@@ -16,7 +18,7 @@ public class PhoneDirectory {
      * @throws IllegalArgumentException if the phone number already exists in the phone directory
      */
     public void addEntry(String name, String phone) {
-        if(phoneDirectory.containsKey(phone)) {
+        if (phoneDirectory.containsKey(phone)) {
             throw new IllegalArgumentException("Phone number already exists");
         }
 
@@ -73,11 +75,21 @@ public class PhoneDirectory {
     }
 
     public void backup(String filePath) {
-        // implementation
+        try (FileOutputStream fos = new FileOutputStream(filePath);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(phoneDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void restore(String filePath) {
-        // implementation
+        try (FileInputStream fos = new FileInputStream(filePath);
+             ObjectInputStream oos = new ObjectInputStream(fos)) {
+            this.phoneDirectory = (Map<String, String>) oos.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
