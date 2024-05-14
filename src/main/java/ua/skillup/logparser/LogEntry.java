@@ -11,7 +11,6 @@ public class LogEntry {
     private final String clientIp;
     private final String message;
 
-
     public LogEntry(LocalDateTime dateTime, LogLevel level, String clientName, String clientIp, String message) {
         this.dateTime = dateTime;
         this.level = level;
@@ -19,33 +18,26 @@ public class LogEntry {
         this.clientIp = clientIp;
         this.message = message;
     }
-
     public LocalDateTime getDateTime() {
         return dateTime;
     }
-
     public LogLevel getLevel() {
         return level;
     }
-
     public String getClientName() {
         return clientName;
     }
-
     public String getClientIp() {
         return clientIp;
     }
-
     public String getMessage() {
         return message;
     }
-
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         return String.format("[%s] [%s] [%s %s] %s", dateTime.format(formatter), level, clientName, clientIp, message);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
